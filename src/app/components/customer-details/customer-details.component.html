@@ -1,0 +1,114 @@
+<app-page-header
+  title="Customer Details"
+  icon="fa fa-user"
+  description="here you can see customer's details"
+></app-page-header>
+
+<div *ngIf="customer$ | async as customer; else noCustomer">
+  <div class="row justify-content-center">
+    <div class="col-10 col-lg-8">
+      <div class="row">
+        <a
+          [routerLink]="['/customers', customer.id, 'edit']"
+          class="ml-3 text-secondary ml-auto px-3"
+        >
+          <i class="fas fa-pen"></i>
+        </a>
+      </div>
+      <div class="row">
+        <div class="form-group col-6">
+          <label for="firstName">First Name</label>
+          <input
+            #firstName="ngModel"
+            [(ngModel)]="customer.firstName"
+            type="text"
+            class="form-control"
+            name="firstName"
+            id="firstName"
+            disabled="disabled"
+          />
+        </div>
+        <div class="form-group col-6">
+          <label for="lastName">Last Name</label>
+          <input
+            #lastName="ngModel"
+            [(ngModel)]="customer.lastName"
+            type="text"
+            class="form-control"
+            name="lastName"
+            id="lastName"
+            disabled="disabled"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-6">
+          <label for="email">Email</label>
+          <input
+            #email="ngModel"
+            [(ngModel)]="customer.email"
+            type="email"
+            class="form-control"
+            name="email"
+            id="email"
+            disabled="disabled"
+          />
+        </div>
+        <div class="form-group col-6">
+          <label for="phone">Phone</label>
+          <input
+            #phone="ngModel"
+            [(ngModel)]="customer.phone"
+            type="tel"
+            class="form-control"
+            name="phone"
+            id="phone"
+            disabled="disabled"
+          />
+        </div>
+      </div>
+      <div class="form-group col-12 px-0">
+        <label for="address">Address</label>
+        <textarea
+          #address="ngModel"
+          [(ngModel)]="customer.address"
+          class="form-control"
+          name="address"
+          id="address"
+          rows="2"
+          disabled="disabled"
+        ></textarea>
+      </div>
+      <div class="form-group col-12 px-0">
+        <label for="notes">Notes</label>
+        <textarea
+          #notes="ngModel"
+          [(ngModel)]="customer.notes"
+          class="form-control"
+          name="notes"
+          id="notes"
+          rows="3"
+          disabled="disabled"
+        ></textarea>
+      </div>
+      <p>
+        Registered At: {{ customer.registered.toDate().getDate() }}/{{
+          customer.registered.toDate().getMonth() + 1
+        }}/{{ customer.registered.toDate().getFullYear() }}
+      </p>
+    </div>
+  </div>
+  <div class="bg-light fixed-bottom py-3 text-center">
+    <button routerLink="/customers" class="btn btn-secondary mx-2">
+      Cancel
+    </button>
+  </div>
+  <br />
+  <br />
+  <br />
+</div>
+
+<!-- If there is no customer with this ID -->
+<ng-template #noCustomer>
+  <p><i>no such customer..</i></p>
+</ng-template>

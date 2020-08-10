@@ -1,0 +1,104 @@
+<app-page-header
+  title="customers"
+  icon="fa fa-users"
+  description="here you can see all customers' information."
+></app-page-header>
+
+<div class="row mb-3">
+  <div class="col-5 col-lg-4">
+    <input
+      [(ngModel)]="term"
+      type="search"
+      name="term"
+      class="form-control"
+      placeholder="Search by first name"
+      autocomplete="off"
+    />
+  </div>
+  <div class="col-7 col-lg-8">
+    <a class="btn btn-info float-right text-white" routerLink="/customers/new">
+      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+      {{ "add new customer" | titlecase }}
+    </a>
+  </div>
+</div>
+
+<div *ngIf="customers$ | async as customers; else loading">
+  <div class="table-responsive" *ngIf="customers.length; else noCustomers">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let customer of customers
+              | filterArray: 'firstName':term
+              | paginate
+                : {
+                    id: 'myPagination',
+                    itemsPerPage: pageSize,
+                    currentPage: page
+                  }
+          "
+        >
+          <td>{{ customer.firstName | titlecase }}</td>
+          <td>{{ customer.lastName | titlecase }}</td>
+          <td>
+            <a [href]="'tel:' + customer.phone">
+              {{ customer.phone }}
+            </a>
+          </td>
+          <td>
+            <a [href]="'mailto:' + customer.email">
+              {{ customer.email | lowercase }}
+            </a>
+          </td>
+          <td class="px-0">
+            <a
+              [routerLink]="['/customers', customer.id]"
+              class="ml-3 text-secondary"
+              ><i class="fa fa-eye"></i
+            ></a>
+            <a
+              (click)="deleteCustomer(customer.id, $event)"
+              class="delete ml-3 text-secondary"
+              ><i class="fas fa-trash-alt"></i
+            ></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="text-center">
+    <pagination-controls
+      id="myPagination"
+      (pageChange)="page = $event"
+      (pageBoundsCorrection)="page = $event"
+      maxSize="5"
+      directionLinks="true"
+      autoHide="true"
+      responsive="true"
+      previousLabel="Previous"
+      nextLabel="Next"
+    >
+    </pagination-controls>
+  </div>
+
+  <ng-template #noCustomers>
+    <p><i>No customers to show...</i></p>
+  </ng-template>
+</div>
+
+<ng-template #loading>
+  <div class="spinner-border text-info" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</ng-template>

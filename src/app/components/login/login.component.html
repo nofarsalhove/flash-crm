@@ -1,0 +1,78 @@
+<div class="row justify-content-center mt-5">
+  <div class="col-12 col-lg-6">
+    <form
+      #loginForm="ngForm"
+      (ngSubmit)="onSubmit(loginForm)"
+      novalidate
+      autocomplete="off"
+    >
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">
+          Flash <i class="fas fa-bolt text-warning"></i> CRM
+        </h1>
+      </div>
+
+      <!-- If there is an error with the log in -->
+      <div *ngIf="loginErrore" class="alert alert-danger">
+        Email or password are not correct
+      </div>
+
+      <div class="form-group mb-4">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            #emailF="ngModel"
+            [(ngModel)]="userForm.email"
+            name="email"
+            required
+            email
+            [ngClass]="{ 'is-invalid': emailF.errors && emailF.touched }"
+            type="email"
+            placeholder="email@example.com"
+            id="email"
+            class="form-control"
+          />
+          <div
+            [hidden]="!(emailF.errors?.required || emailF.errors?.email)"
+            class="invalid-feedback"
+          >
+            Valid email is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-4">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            #passwordF="ngModel"
+            [(ngModel)]="userForm.password"
+            name="password"
+            required
+            [ngClass]="{ 'is-invalid': passwordF.errors && passwordF.touched }"
+            type="password"
+            id="password"
+            class="form-control"
+            autocomplete="current-password"
+          />
+          <div [hidden]="!passwordF.errors?.required" class="invalid-feedback">
+            Password is required
+          </div>
+        </div>
+      </div>
+
+      <button
+        [disabled]="!loginForm.form.valid"
+        class="btn btn-lg btn-info btn-block"
+        type="submit"
+      >
+        Log in
+      </button>
+    </form>
+
+    <hr />
+    <button appLoginGoogle class="btn btn-lg btn-info btn-block mt-3">
+      <i class="fab fa-google" aria-hidden="true"></i> Log in with Google
+    </button>
+  </div>
+</div>

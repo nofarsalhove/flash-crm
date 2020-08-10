@@ -1,0 +1,14 @@
+{
+  "hosting": {
+    "public": "dist/flash-crm",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [{
+      "source": "**",
+      "destination": "/index.html"
+    }]
+  }
+}

@@ -1,0 +1,23 @@
+<!-- Header navbar-->
+<header>
+  <app-navbar></app-navbar>
+</header>
+
+<!-- The main content - sidebar and the site content -->
+<main class="countainer-fluid row m-0 pt-2">
+  <!-- If the user is not connected to the system the sidenav is hidden-->
+  <div
+    class="col-12 col-sm-12 col-md-12 col-lg-2 mt-5 px-0"
+    *ngIf="authService.user"
+  >
+    <app-sidenav></app-sidenav>
+  </div>
+  <!-- If the user is not connected to the system the sidenav is hidden
+        and the content will catch 100% of the screen to be in the center of the screen-->
+  <div
+    class="content col-lg-10 mt-lg-5 pt-2 bg-white"
+    [ngClass]="{ 'col-lg-12 mt-5': !authService.user }"
+  >
+    <router-outlet></router-outlet>
+  </div>
+</main>

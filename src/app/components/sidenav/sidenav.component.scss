@@ -1,0 +1,16 @@
+ul {
+  background-color: rgb(32, 39, 58);
+  min-height: unset;
+
+  li {
+    .active {
+      background-color: rgba(219, 220, 226, 0.1);
+    }
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  ul {
+    min-height: 100vh;
+  }
+}
